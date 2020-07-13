@@ -2,9 +2,9 @@ program addNumbers
 ! this is a simple program adds two numbers
 implicit none
 
-! implicit typing: 
+! implicit typing: ????????????????????????????????????
 ! ?????????
-! i,j,k,l,m,n present the integertype, and other cahracter specify the real type
+! i,j,k,l,m,n ???????????? real type
 
 
 
@@ -46,7 +46,7 @@ integer :: largeval
     character(len=80)::message ! a string of 80 characters
 
 ! test for named constant
-    real,parameter::pi=3.1415927
+    real,parameter::pi=3.14159265389793238
     ! gravitational acceleration
     real, parameter::g=9.81
     ! variable declaration
@@ -158,16 +158,26 @@ integer :: largeval
     end type books
     ! declaring a book type
     type(books)::book1
-    
+
     ! declaring an array of structure
     type(books),dimension(2)::list
-    
+
 ! declaring a pointer variable
     integer,pointer::p1
     integer,target::t1,t2
-    
 
-
+! declaring for the test of formatted output
+    ! declared aboved
+    ! formatted output for characters
+    character(len=15)::first_name_out
+    ! formatted real output
+    real::c_out=1.2786456e-9,d=0.1234567e3
+    integer::n=300789,k=45,i_out=2
+    character(len=15)::str="Tutorials point"
+    ! test for format statements
+    character(len=15)::name_out
+    integer::id
+    real::weight
 
 ! assigning values
     print *, "=============== variables declaration! ==========="
@@ -231,13 +241,13 @@ integer :: largeval
 
     ! assign for test of extracting substrings
     hello='Hello world!'
-    
+
     ! assign for a books type subject
     book1%title="C PROGRAMMING"
     book1%author="Nuha Ali"
     book1%subject="C programming Tutorial"
     book1%book_id=6495407
-    
+
     ! assign for a books type of an array structures
     list(1)%title="C PROGRAMMING"
     list(1)%author="Nuha Ali"
@@ -246,7 +256,7 @@ integer :: largeval
     list(2)%title="Telecom Billing"
     list(2)%author="Zara Ali"
     list(2)%subject="Telecom Billing Tutorial"
-    list(2)%book_id=6495700    
+    list(2)%book_id=6495700
 
 
 ! complex type: real part and imaginary part
@@ -618,7 +628,7 @@ print *,huge(largeval) ! ?????????????????
     do j=1,5
       print *,a_data(j)
     end do
-    
+
     print *,"The B array"
     do i=lbound(b_data,1),ubound(b_data,1) ! return the lower and upper nbound of an array
       ! print every row separately
@@ -628,7 +638,7 @@ print *,huge(largeval) ! ?????????????????
     do j=1,10
         print *,c_data(j)
     end do
-    
+
 ! use of where statement
     print *,"Test for where statement"
     do i=1,3
@@ -640,7 +650,7 @@ print *,huge(largeval) ! ?????????????????
     do i=lbound(a_wh,1),ubound(a_wh,1)
         write(*,*)(a_wh(i,j),j=lbound(a_wh,2),ubound(a_wh,2))
     end do
-    
+
     where(a_wh<0)
         a_wh=1
     elsewhere
@@ -656,7 +666,7 @@ print *,huge(largeval) ! ?????????????????
     print *,book1%author
     print *,book1%subject
     print *,book1%book_id
-        
+
 ! array of structures
     ! display the list(2) info
     print *,list(1)%title
@@ -672,7 +682,7 @@ print *,huge(largeval) ! ?????????????????
 ! test for pointers
     ! pointer in fortran contains more information about a
     ! particular objectm like type, rank, extents and memory address
-    
+
     ! test for allocate space
     allocate(p1)
     p1=1
@@ -717,13 +727,47 @@ print *,huge(largeval) ! ?????????????????
     print *,p1
     print *,t2
     print *,"target is the highes order,when target change, the pointer value change also."
-    
-    
-    
-    
-    
-    
-    
+
+! test for basic input and output: The form of input-outout of read and print is called list-directed input-output
+    ! this is free format I/O
+    ! formatted input output: read fmt,variable_list , fmt is the format specification
+    ! display the pi
+    print *,"============= Test for formatted output =================== "
+    print "(f6.3)",PI
+    print "(f10.7)",PI
+    print "(e16.4)",PI
+    print "(es10.3)",PI*1e6
+    print "(/,5x,f6.3,/)",PI
+    print "(f20.15)",PI
+
+    ! test for character output
+    print *,"please enter your firstname"
+    print *,"Up to 20 characters, please"
+    read *,first_name_out
+    print "(1x,a)",first_name_out ! character output
+
+    ! test for real format
+    print "(i6)",k
+    print "(i6.3)",k
+    print "(3i10)",n,k,i_out
+    print "(i10,i3,i5)",n,k,i_out
+    print "(a15)",str
+    print "(f12.3)",d
+    print "(e12.4)",c_out
+    print "(/,3x,'n=',i6,3x 'd=',f7.4)",n,d
+
+    ! test for format statements
+    name_out="Ardupilot"
+    id=1
+    weight=0.08
+    print *,'The product details are'
+    print 100
+    100 format(7x,'name:',7x,'id:',1x,'weoght:')
+    print 200,name_out,id,weight
+    200 format(1x,a,2x,i3,2x,f5.2)
+
+
+
 
 
 
