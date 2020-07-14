@@ -1,5 +1,34 @@
+module constants1
+  implicit None
+  real,parameter,private::pi3=3.1415926536
+  real,parameter,private::e3=2.7182818285
+contains
+  subroutine show_constants1()
+    print *,"Pi= ",pi3
+    print *,"e= ",e3
+  end subroutine show_constants1
+  function epowerxf(x) result(epx)
+    implicit None
+    real::x
+    real::epx
+    epx=e3**x
+  end function epowerxf
+
+  function areacircle(r) result(a)
+    implicit None
+    real::r
+    real::a
+    a=pi3*r**2
+  end function areacircle
+
+
+end module constants1
+
 program addNumbers
 ! this is a simple program adds two numbers
+! test for use Modules
+use constants
+use constants1
 implicit none
 
 ! implicit typing: ????????????????????????????????????
@@ -178,6 +207,41 @@ integer :: largeval
     character(len=15)::name_out
     integer::id
     real::weight
+
+! declaring for the test of open and close
+    real,dimension(100)::x_open,y_open
+    real,dimension(100)::p_open,q_open
+! test for fucntion
+    real :: a_fcn
+
+! test for subroutines
+    real::a_subs,b_subs
+
+! test for intent attribute
+    real::x_int,y_int,z_int,disc
+
+! test for recursive precedures
+    integer::f_rec
+
+! test for Modules
+    real::x_mod,epowerx,area_mod,radius_mod
+
+! test for private variables instrinsic Modules
+
+! test for numeric fucntions
+    real::a_nu,b_nu
+    complex::z_nu
+
+! test for mathematical functions
+    real,parameter::g_ma=9.8
+    real,parameter::pi_ma=3.1415927
+    real::a_ma,t_ma,u_ma,x_ma,y_ma
+
+
+
+
+
+
 
 ! assigning values
     print *, "=============== variables declaration! ==========="
@@ -766,6 +830,231 @@ print *,huge(largeval) ! ?????????????????
     print 200,name_out,id,weight
     200 format(1x,a,2x,i3,2x,f5.2)
 
+! test for file input and output
+    ! test for open and close
+    ! data
+    do i=1,100
+      x_open(i)=i*0.1
+      y_open(i)=sin(x_open(i))*(1-cos(x_open(i))/3.0)
+    end do
+    ! output data into a file
+    open(1,file='data1.dat',status='new')
+    do i=1,100
+      write(1,*) x_open(i),y_open(i)
+    end do
+    close(1)
+
+    ! test for opening the file for reading
+    open(2,file='data1.dat',status='old')
+    print *,"============ test for read from a file ======================="
+    do i=1,100
+      read(2,*) p_open(i),q_open(i)
+    end do
+    close(2)
+
+    do i=1,100
+      write(*,*)p_open(i),q_open(i)
+    end do
+    print *,"how to delete a exist file via linux cmd?"
+    ! test for system command
+    call system('rm data1.dat')
+    print *,'Well done, you delete the "data1.dat" successfilly!'
+! test for procedures: There are two types of procedires: functions and subroutines
+    ! A function is a procedure that returns a single quantity. A function should not modify its arguments
+    ! The returmed quantity is known as function value, and it is denoted by the function name
+    a_fcn=area_of_circle(2.0)
+    print *,"================ test for function ====================="
+    print *,"The area of a circle with radius 2.0 is"
+    print *,"=============== test for contains function ===================="
+    print *,a_fcn
+
+
+    print *,"=============== test for external fucntion ====================="
+    print *,"need to be done"
+
+! test for subroutines
+    a_subs=2.0
+    b_subs=3.0
+    print *,"================ test for subroutine ============================"
+    print *,"Before calling swap"
+    print *,"a= ",a_subs
+    print *,"b= ",b_subs
+    call swap(a,b)
+    print *,"After calling swap"
+    print *,"a= ",a_subs
+    print *,"b= ",b_subs
+
+! test for specifying the intent of the arguments
+    ! The intent attribute allows you to specify the intention which arguments are
+    ! used in the procedure. The follow table provides the values of intent attribute
+    ! in / out / inout
+    x_int=1.0
+    y_int=5.0
+    z_int=2.0
+    call intent_example(x_int,y_int,z_int,disc)
+    print *,"=========== Test for intent attribute ============"
+    print *,"The value of the discrimininat is"
+    print *,disc
+
+! test for recusive precedures
+    print *,"============ Test for recursive precedures ================"
+    i=15
+    print *,"The value of factorial 15 is"
+    f_rec=myfacrotial(15)
+    print *,f_rec
+
+! test for internal procedures
+    ! when a procedure is containsed within a program, it is called the internal
+    ! procedure of the program. The syntax for containing an internal procedure is
+    ! as follows:
+    print *,"================ test for internal procedures ============================"
+    print *,"Before calling swap"
+    print *,"a= ",a_subs
+    print *,"b= ",b_subs
+    call swap1(a,b)
+    print *,"After calling swap"
+    print *,"a= ",a_subs
+    print *,"b= ",b_subs
+
+! test for modules
+    ! A modues is like a package where you can keep your functions and subroutines, in case
+    ! you are writing a very big program, or your funtions or subroutines can be used in more
+    ! than one program.
+    ! Modules provide you a way of splitting your programs between multiple files.
+      !used for:
+      ! (1) packaging subprograms, data and interface blocks
+      ! (2) Defining global data that can be used by more than one routine
+      ! (3) Declaring variables that can be made avilable within any routines you choose.
+      ! (4) Importing a module entirely, for use, into another program or subroutine.
+      print *, "============ Test for using modules ================="
+      x_mod=2.0
+      radius_mod=7.0
+      epowerx=e**x_mod
+      area_mod=pi2*radius_mod**2
+      call show_constants()
+      print *,"e raised to the power of 2.0= ", epowerx
+      print *,"Area of a circle with radius 7.0= ",area_mod
+
+      ! test for accessibility of variables and subroutines in a module
+        ! when you declare some variable or subroutine as private, it is not avilable
+        ! outside the module.
+        print *,"============= test for private variables in modules ==========="
+        print *, "It's ok, when module declared after the main program."
+        print *,"Howerer, it occur error, when module declared before the programs"
+
+      ! test private in a Modules fucntions
+      call show_constants1()
+      print *,"e raised to the power of 2.0=", epowerxf(2.0)
+      print *,"area of a circle with radius 7.0= ",areacircle(7.0)
+
+! test for intrinsic function:
+    ! instrinsic funtion are some common and important functions that are provided
+    ! as a part of the fortran language. We have already discussed some of these functions
+    ! in the arrays,characters and string chapters
+    ! instrinsic funtion can be categorised as:
+      ! numberic functions
+      ! mathematical fucntions
+      ! numeric inquiry fucntions
+      ! floating-point manipulation functions
+      ! bit manipulation functions
+      ! cahracter fucntions
+      ! kind function
+      ! logical fucntion
+      ! array fucntion
+    ! test for numeric fucntions
+    print *,"============= test for numeric fucntion ================"
+    a_nu=15.2345
+    b_nu=-20.7689
+    write(*,*) 'abs(a):',abs(a),'abs(b)',abs(b)
+    write(*,*) 'aint(a):',aint(a),'aint(b)',aint(b)
+    write(*,*) 'ceiling(a):',ceiling(a),'ceiling(b):',ceiling(b)
+    write(*,*) 'floor(a):',floor(a),'floor(b):',floor(b)
+
+    z_nu=cmplx(a_nu,b_nu)
+    write(*,*)'z: ',z_nu
+
+! test for mathematical fucntions
+    print *,"============ test for mathematical function ================="
+    a_ma=45.0
+    t_ma=20.0
+    u_ma=10.0
+    ! convert angle to radians
+    a_ma=a_ma*pi_ma/180.0
+    x_ma=u_ma*cos(a_ma)*t_ma
+    y_ma=u_ma*sin(a_ma)*t_ma-0.5*g_ma*t_ma**2
+    write(*,*) 'x:',x_ma,'y: ',y_ma
+! test for numeric inquiry fucntion
+      ! digit / epslion / huge / maxexponent / precision / radix / range / tiny /
+
+! test for floating-point manipulation functions
+    ! exponent / fraction / nearest / rrspacing / scale / set_exponent / spacing
+
+! test for bit manipulation function
+    ! bit_size, btest, iand, ibclr, ibits, ibset, ieor, ior, ishift, ishftc, not
+
+! test for character fucntion
+    ! achar adjustl, adjustr, char, iachar, ichar, len, len_trim, lge, lgt,lle, llt,
+    ! repeat, scan, trim, verify
+
+! test for kind functions
+    ! kind, selected_int_kind, selected_real_kind
+
+! logical fucntions
+    ! logical
+
+! test for kind attribute
+    ! precision, kind, maxexponent, range
+
+! program libraries
+      ! randlib: random number and statistical distribution generators
+      ! blas
+      ! eispack
+      ! gams-nist to available math software
+      ! some statistical and other routine from nist
+      ! lapack
+      ! linpack
+      ! minpack
+      ! mudpack
+      ! ncar mathematical library
+      ! the netlib collection of mathematical software, papers, and databases
+      ! odepack
+      ! oderpack, a set of routines for ranking and ordering
+      ! expokit for computing matrix expoentials
+      ! slatec
+      ! specfun
+      ! starpac
+      ! statlib statistical library
+      ! toms
+      ! sorting and merging strings
+
+      ! not free
+      ! nar fortran numerical library
+      ! the visual numberics imsl library
+      ! numerical recipes
+
+! programming stytle
+      ! a good program should have following characteristics
+          ! (1) readability
+          ! (2) proper logical structures
+          ! (3) self-explanatory notes and comments
+          ! i.g. ! loop to calculate ncr
+      ! (1) indented code blocks to make various levels of code clear
+      ! (2) self-checking code to ensure there will be no numerical errors like
+      ! division by zero, square root of a negative real number or logarithm of
+      ! a negative real number
+      ! (3) including codes that ensure variables do not take illegal or out of range
+      ! values, i.e., input validation
+      ! (4) not puttung checks where it would be unnecessary and slows down the execution
+      ! (5) using appropriate algorithms
+      ! (6) splitting the long expressions using the continuation marker '&'
+      ! (7) making meaningful variable names
+
+! debuging programs
+      ! breakpoint, stepping, watch points, read or write (disp)
+      ! gdb: gnu debugger comes with linux operating system
+      ! (1) break, run, cont, next, step
+      ! dbx: stop, stop in, stop at, run, cont, next, step
+       
 
 
 
@@ -773,8 +1062,50 @@ print *,huge(largeval) ! ?????????????????
 
 
 
+
+
+
+    contains
+  function area_of_circle(r)
+  ! this fucntion compute the area of a circle with radius r
+    implicit None
+  ! fucntion results
+    real::area_of_circle
+  ! dummy arguments
+    real::r
+  ! local variables
+    real::pi
+    pi=4*atan(1.0)
+    area_of_circle=pi*r**2
+  end function area_of_circle
+
+  ! recursive precedures
+    recursive function myfacrotial (n) result(fac)
+      ! computes the factorial of n(n!)
+      implicit None
+      ! fucntion results
+      integer::fac
+      ! dummy arguments
+      integer,intent(in)::n
+      select case(n)
+      case (0:1)
+        fac=1
+      case default
+        fac=n*myfacrotial(n-1)
+      end select
+    end function myfacrotial
+
+! test for internal procedures
+subroutine swap1(x,y)
+  implicit None
+  real::x,y,temp
+  temp=x
+  x=y
+  y=temp
+end subroutine swap1
 
 end program addNumbers
+
 
 
 ! declaring the subroutines for program
@@ -818,3 +1149,35 @@ subroutine printarray1(a)
     print *,a(i)
   end do
 end subroutine printarray1
+
+subroutine swap(x,y)
+  implicit None
+  real::x,y,temp
+  temp=x
+  x=y
+  y=temp
+end subroutine swap
+
+subroutine intent_example(a,b,c,d)
+  implicit None
+  ! dummy arguments
+  real,intent(in)::a
+  real,intent(in)::b
+  real,intent(in)::c
+  real,intent(out)::d
+
+  d=b*b-4.0*a*c
+end subroutine intent_example
+
+module constants
+  implicit None
+  real,parameter::pi2=3.1415926536
+  real,parameter::e=2.7182818285
+contains
+  subroutine show_constants()
+    print *,"Pi= ",pi2
+    print *,"e= ",e
+  end subroutine show_constants
+end module constants
+
+! test for other module avilable
