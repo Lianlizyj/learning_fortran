@@ -24,6 +24,17 @@ contains
 
 end module constants1
 
+module constants
+  implicit None
+  real,parameter::pi2=3.1415926536
+  real,parameter::e=2.7182818285
+contains
+  subroutine show_constants()
+    print *,"Pi= ",pi2
+    print *,"e= ",e
+  end subroutine show_constants
+end module constants
+
 program addNumbers
 ! this is a simple program adds two numbers
 ! test for use Modules
@@ -1054,7 +1065,7 @@ print *,huge(largeval) ! ?????????????????
       ! gdb: gnu debugger comes with linux operating system
       ! (1) break, run, cont, next, step
       ! dbx: stop, stop in, stop at, run, cont, next, step
-       
+
 
 
 
@@ -1169,15 +1180,6 @@ subroutine intent_example(a,b,c,d)
   d=b*b-4.0*a*c
 end subroutine intent_example
 
-module constants
-  implicit None
-  real,parameter::pi2=3.1415926536
-  real,parameter::e=2.7182818285
-contains
-  subroutine show_constants()
-    print *,"Pi= ",pi2
-    print *,"e= ",e
-  end subroutine show_constants
-end module constants
+
 
 ! test for other module avilable
