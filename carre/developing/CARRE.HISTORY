@@ -1,0 +1,39 @@
+2020-07-10_17:49:10
+10 17:48 dg.dgo -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.dgo
+17:48 dg.equ -> /home/zhangyanjie/version/test/solps-iter/runs/hl2m/linear-1/g20180718.75000_ltr=0.42_drsep=6cm_x2.equ
+10 17:48 dg.str -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.str
+10 17:48 dg.trg -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.trg
+dg.dgo copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.equ copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.str copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.trg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+DG model lpd.dg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+The grid is stored as /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v002.geo
+carre.dat, structure.dat, rzpsi.dat, and btor.dat copied to /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v002
+=======================================================================================
+2020-07-10_18:34:16
+10 17:48 dg.dgo -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.dgo
+17:48 dg.equ -> /home/zhangyanjie/version/test/solps-iter/runs/hl2m/linear-1/g20180718.75000_ltr=0.42_drsep=6cm_x2.equ
+10 17:48 dg.str -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.str
+10 17:48 dg.trg -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.trg
+dg.dgo copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.equ copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.str copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.trg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+DG model lpd.dg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+The grid is stored as /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v003.geo
+carre.dat, structure.dat, rzpsi.dat, and btor.dat copied to /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v003
+=======================================================================================
+2020-07-10_18:36:40
+10 17:48 dg.dgo -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.dgo
+17:48 dg.equ -> /home/zhangyanjie/version/test/solps-iter/runs/hl2m/linear-1/g20180718.75000_ltr=0.42_drsep=6cm_x2.equ
+10 17:48 dg.str -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.str
+10 17:48 dg.trg -> /home/zhangyanjie/version/test/solps-iter/scripts.local/developing/lpd.trg
+dg.dgo copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.equ copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.str copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+dg.trg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+DG model lpd.dg copied to /home/zhangyanjie/version/test/solps-iter/modules/DivGeo/device/HL-2M
+The grid is stored as /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v004.geo
+carre.dat, structure.dat, rzpsi.dat, and btor.dat copied to /home/zhangyanjie/version/test/solps-iter/modules/Carre/meshes/HL-2M/lpd.v004
+=======================================================================================

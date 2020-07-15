@@ -1,0 +1,96 @@
+ 
+ Entering sptris: npx=           1
+ 
+ipx,ix,jx,ptx,pty =     1   184   130  6.15067E+00 -3.94761E+00
+psi(ix,jx),CCW = -3.08263E-03 -5.37441E-04 -8.06133E-04  1.06443E-04
+fctpx = -8.43119186E-04
+ 
+ idir,nbdfav,isep =           1           0           0
+i1,i2,j1,j2,iref,jref = 186 186 129 130 186 129
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -2.48752E-03  4.30725E-03 -8.43119E-04
+Cell crossing: k,isep,ipx,separx,separy =   2   1   1  6.17383E+00 -3.99244E+00
+ insert: indstr,nbdef,ipx           2           0           1
+i1,i2,j1,j2,iref,jref = 186 186 130 131 186 130
+psi(i1,j1),psi(i2,j2),fctpx(ipx)=  4.30725E-03  6.57191E-04 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 186 186 131 132 186 131
+psi(i1,j1),psi(i2,j2),fctpx(ipx)=  6.57191E-04 -1.35103E-02 -8.43119E-04
+Cell crossing: k,isep,ipx,separx,separy =   2   2   1  6.17383E+00 -3.93419E+00
+ insert: indstr,nbdef,ipx           0           1           1
+ 
+ idir,nbdfav,isep =           2           1           2
+i1,i2,j1,j2,iref,jref = 186 185 132 132 185 132
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -1.35103E-02 -1.13855E-02 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 185 184 132 132 184 132
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -1.13855E-02 -6.89749E-03 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 184 183 132 132 183 132
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -6.89749E-03 -1.29133E-04 -8.43119E-04
+Cell crossing: k,isep,ipx,separx,separy =   2   3   1  6.13199E+00 -3.90625E+00
+ insert: indstr,nbdef,ipx           0           1           1
+ 
+ idir,nbdfav,isep =           3           1           3
+i1,i2,j1,j2,iref,jref = 183 183 132 131 182 131
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -1.29133E-04  3.27165E-03 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 183 183 131 130 182 130
+psi(i1,j1),psi(i2,j2),fctpx(ipx)=  3.27165E-03 -3.41930E-03 -8.43119E-04
+Cell crossing: k,isep,ipx,separx,separy =   2   4   1  6.13047E+00 -3.95672E+00
+ insert: indstr,nbdef,ipx           1           1           1
+i1,i2,j1,j2,iref,jref = 183 183 130 129 182 129
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -3.41930E-03 -2.01364E-02 -8.43119E-04
+ 
+ idir,nbdfav,isep =           4           2           4
+i1,i2,j1,j2,iref,jref = 183 184 129 129 183 128
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -2.01364E-02 -1.64315E-02 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 184 185 129 129 184 128
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -1.64315E-02 -1.05608E-02 -8.43119E-04
+i1,i2,j1,j2,iref,jref = 185 186 129 129 185 128
+psi(i1,j1),psi(i2,j2),fctpx(ipx)= -1.05608E-02 -2.48752E-03 -8.43119E-04
+ 
+After idir loop: isep,ipx,nbdef,nbdfav =    4   1   2   2
+ 
+After X-point loop: isep,npx,nbdef,nbdfav =    4   1   2   2
+ixp_hlp :   1   1
+xsttmp :  6.76803E+00  4.65599E+00
+ysttmp : -4.97930E+00 -4.63556E+00
+ nptot
+    76 1186 1186  127
+ indplq
+     2    0    0    1
+ Entering trgarng: nbdef=           2
+ inddef:       2           1
+ indxpt:       1           1
+ xst:      6.7680E+00  4.6560E+00
+ yst:     -4.9793E+00 -4.6356E+00
+ Single intersections :            2
+ jj :    1   2
+ ll :    1   1
+ Complete x-points:            1
+ kk :    1
+ Before re-arrangement. k =            2
+ jj :    1   2
+ After re-arrangement:            2
+ inddef:      2          1
+ xst:     6.768E+00  4.656E+00
+ yst:    -4.979E+00 -4.636E+00
+ Leaving trgarng:            2
+ Entering orddef: npx,nbdef=            1           2
+ inddef:    2   1
+ xst:   6.77E+00  4.66E+00
+ yst:  -4.98E+00 -4.64E+00
+ ptx:   6.15E+00
+ pty:  -3.95E+00
+ After ordering in y
+ inddef:    1   2
+   i ipx    xy       pty       aire   :                   wx                  :                   wy
+   1  1  -3.95E+00  9.16E-01  9.83E-01  6.15E+00  4.66E+00  6.77E+00  6.15E+00 -3.95E+00 -4.64E+00 -4.98E+00 -3.95E+00
+ After ordering in x
+ inddef:    2   1
+ Leaving sptris...
+ 
+ === carre *..10.0 - before frtier
+ ptx:  6.1507E+00
+ pty: -3.9476E+00
+ nptot(4,nxpoints)
+    75 1182    1  126
+ Strike points (presumably)
+ x:  6.7680E+00  6.1507E+00  6.1507E+00  4.6560E+00
+ y: -4.9793E+00 -3.9476E+00 -3.9476E+00 -4.6356E+00
