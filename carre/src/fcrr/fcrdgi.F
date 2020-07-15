@@ -33,6 +33,7 @@ c
       return
 c-----------------------------------------------------------------------
 c*** xptcntr
+  ! ================================= get the XP position =========================================
  10   call rearre(xarray,3*nxptm,i)
       nxpt=0
       if(i.lt.2) then
@@ -48,6 +49,7 @@ c*** xptcntr
       end if
       return
 c*** xlpcntr
+  ! ==================== get the OP position ===============================
  20   call rearre(x,3,i)
       if(i.lt.2) then
         write(*,*) '*** fcrtrn: too few values for xlpcntr'
@@ -64,7 +66,7 @@ c*** trg_spcf
 c*** tgtgrd
  40   if(lutrg.le.0 .or. lutrg.gt.ntrgx) then !{
         write(*,*) 'Target index outside limits: ',lutrg
-        stop ' ==> Corrupted DG output files?' 
+        stop ' ==> Corrupted DG output files?'
       else !}{
         call resime(rdummy)
         tgarde(lutrg) = real(rdummy,R8)

@@ -25,18 +25,18 @@ c*** List of the valid input keywords
      2    'dltpn   ','pntrat  ','clstruct'/
 c======================================================================
 c
-      call locase(nam,name,8)
+      call locase(nam,name,8) ! lower the character
       do i=1,nnms
         if(streql(name,unm(i))) go to (10,20,30,40,50,60,70,80),i
       end do
       call scipit
       return
 c----------------------------------------------------------------------
- 10   call rearri(npr,nrgnx,i)
+ 10   call rearri(npr,nrgnx,i) ! surface number of each regions
       if(i.gt.0) then
         if(nrgn.gt.0) then
           if(nrgn.ne.i) then
-            write(0,*) 'Inconsistent number of regions found for npr:',
+            write(0,*) 'Inconsistent number of regions found for npr:', ! find the npr
      ,                  i,' instead of ',nrgn
           end if
           nrgn=max(nrgn,i)
@@ -45,11 +45,11 @@ c----------------------------------------------------------------------
         end if
       end if
       return
- 20   call rearri(nptseg,nsgmx,i)
+ 20   call rearri(nptseg,nsgmx,i) ! grid number of each segement of separatrices
       if(i.gt.0) then
         if(nsgm.gt.0) then
           if(nsgm.ne.i) then
-            write(0,*) 'Inconsistent number of sections found for ',
+            write(0,*) 'Inconsistent number of sections found for ' ,! nptseg
      ,                  'nptseg:',i,' instead of ',nsgm
           end if
           nsgm=max(nsgm,i)
@@ -58,7 +58,7 @@ c----------------------------------------------------------------------
         end if
       end if
       return
- 30   call rearre(rarray,nrgnx,i)
+ 30   call rearre(rarray,nrgnx,i) ! first and last step of surface in each region
       if(i.gt.0) then
         if(nrgn.gt.0) then
           if(nrgn.ne.i) then
@@ -72,7 +72,7 @@ c----------------------------------------------------------------------
         deltr1(1:i) = real(rarray(1:i),R8)
       end if
       return
- 40   call rearre(rarray,nrgnx,i)
+ 40   call rearre(rarray,nrgnx,i) ! ditto
       if(i.gt.0) then
         if(nrgn.gt.0) then
           if(nrgn.ne.i) then
@@ -86,7 +86,7 @@ c----------------------------------------------------------------------
         deltrn(1:i) = real(rarray(1:i),R8)
       end if
       return
- 50   call rearre(parray,nsgmx,i)
+ 50   call rearre(parray,nsgmx,i) ! first and last step in point distribution in each segement
       if(i.gt.0) then
         if(nsgm.gt.0) then
           if(nsgm.ne.i) then
@@ -100,7 +100,7 @@ c----------------------------------------------------------------------
         deltp1(1:i) = real(parray(1:i),R8)
       end if
       return
- 60   call rearre(parray,nsgmx,i)
+ 60   call rearre(parray,nsgmx,i) ! ditto
       if(i.gt.0) then
         if(nsgm.gt.0) then
           if(nsgm.ne.i) then
@@ -114,7 +114,7 @@ c----------------------------------------------------------------------
         deltpn(1:i) = real(parray(1:i),R8)
       end if
       return
- 70   call rearre(rdummy,1,i)
+ 70   call rearre(rdummy,1,i) !
       pntrat = real(rdummy(1),R8)
       return
  80   call resimi(nclstr)

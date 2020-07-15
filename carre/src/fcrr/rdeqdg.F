@@ -81,12 +81,12 @@ c      read(lun,8000) (zgr(i),i=1,nz)
       print *,'reading pfm...'
 c      read(lun,8000) ((pfm(i,j),i=1,nr),j=1,nz)
       read(lun,*) ((pfm(i,j),i=1,nr),j=1,nz)
- 8000 format(5(3x,e14.8))
+ 8000 format(5(3x,e14.8)) !
       iret=0
       return
 c-----------------------------------------------------
-c
- 99   print *,'==== rdeqdg: error in the input files'
+c     ! read the r,z,psi value
+ 99   print *,'==== rdeqdg: error in the input files' ! if error, display error message
       iret=8
 c
       end

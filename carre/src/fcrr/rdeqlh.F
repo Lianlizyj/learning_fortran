@@ -12,29 +12,29 @@ c
       real btf,rtf
       integer i,j,k,l
       character ss*80, s(80), hh*80, h(80), utb
-      equivalence (s,ss),(h,hh)
+      equivalence (s,ss),(h,hh) ! share memery between a and b
       logical ll
 c=======================================================================
 c
       utb=char(9)
       rtf=-1.
- 10   read(lun,'(a)',end=90) ss
-      if(ss.eq.' ') go to 10
-      k=0
-      hh=' '
-      do 100 i=1,80
-          if(s(i).eq.'(') then
-              if(hh.eq.'r') return
-              go to 90
+ 10   read(lun,'(a)',end=90) ss ! read the line, if error, display the error message
+      if(ss.eq.' ') go to 10 ! if ss is empty, read the next line (until the last line)
+      k=0 ! read the first not empty line
+      hh=' ' ! set hh to empty
+      do 100 i=1,80 ! do i=1,80
+          if(s(i).eq.'(') then ! check if read the position head lines
+              if(hh.eq.'r') return ! if read the character "r" r(1:jm),
+              go to 90 !  display the error message
           end if
-          if(s(i).eq.':') go to 10
-          if(s(i).eq.' ' .or. s(i).eq.utb) go to 100
-          if(s(i).eq.'=') go to 20
+          if(s(i).eq.':') go to 10 ! if read the ":", containing the header information, read the line
+          if(s(i).eq.' ' .or. s(i).eq.utb) go to 100 ! if blank, next loop
+          if(s(i).eq.'=') go to 20 ! if find "=",
           k=k+1
-          h(k)=s(i)
+          h(k)=s(i) ! get the header line information
  100  continue
 
-      if(hh.eq.'r(1:jm);') return
+      if(hh.eq.'r(1:jm);') return ! if read r(1:jm), display error message
       go to 90
 c-----------------------------------------------------------------------
 c*** Parse the string
@@ -66,7 +66,7 @@ c
       end do !}
 
  30   continue
-      select case (j)
+      select case (j) ! get the nr,nz,btf,rtf
       case (1)
         read(hh,'(bn,i4)') nr
       case (2)

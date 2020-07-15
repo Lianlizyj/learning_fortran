@@ -13,7 +13,7 @@ c
       real(kind=R8)
      ,  deltr1(nrgnx),deltrn(nrgnx),deltp1(nsgmx),deltpn(nsgmx),
      ,  xstr(nmstr),ystr(nmstr),xptcntr(3,nxptm),xlpcntr(3),
-     ,  rbtor,relax,rlcept,pasmin,xpttol,pntrat,tgarde(ntrgx)
+     ,  rbtor,relax,rlcept,rlc,xpttol,pntrat,tgarde(ntrgx)
       real(kind=R8) pfm(ngpr,ngpz),rgr(ngpr),zgr(ngpz)
       common/fcrcom/pfm,rgr,zgr,
      ,  relax,pasmin,rlcept,pntrat,
@@ -25,7 +25,7 @@ c
      ,  nsgm,nptseg,nrgn,npr,ntrg,
      ,  nstr,lstr,nclstr,nr,nz,
      ,  lm_cnfg,
-     l  ldgv2  
+     l  ldgv2
 c
 c*** nnstr : maximum number of structures to be imported from dg
 c*** nmstr : maximum number of nodes in all the structures

@@ -173,7 +173,7 @@ c
 c
 c*** ... re-scale the poloidal dimensions from mm (DG) to m (Carre)
 c
-      do i=1,nsgm
+      do i=1,nsgm ! convert mm to m
         deltp1(i)=0.001_R8*deltp1(i)
         deltpn(i)=0.001_R8*deltpn(i)
       end do
@@ -181,19 +181,19 @@ c
 c
 c*** ... and the poloidal flux from wb/rad (DG) to wb (Carre)
 c
-      do i=1,nr
+      do i=1,nr ! convert wb/rad to wb pfm*2*pi
         do j=1,nz
           pfm(i,j)=dpi*pfm(i,j)
         end do
       end do
-      do i=1,nrgn
+      do i=1,nrgn ! conver deltr1 to wb
         deltr1(i)=deltr1(i)*dpi
         deltrn(i)=deltrn(i)*dpi
       end do
 c
 c*** ... for DN cases, re-order the tgarde array to Carre ordering
 c
-      if (ntrg.eq.4) then
+      if (ntrg.eq.4) then ! reorder for DN
         do i=1,ntrg ! storing the values in DG order
           tgtgrd(i)=tgarde(i)
         end do
