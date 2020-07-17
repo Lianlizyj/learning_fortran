@@ -38,8 +38,8 @@ c  procedures
 c======================================================================
 c  calculation
 c
-      ifail=1
-      call entete(iunit,'$structures',ifail)
+      ifail=1 ! find the data header, if error, display the error message(specify the error language by sellan)
+      call entete(iunit,'$structures',ifail) ! read the structure index (closed pos, open neg )
       if(ifail.eq.1) then
         if(sellan(1:8).eq.'francais') then
           write(6,*)'Incapable de trouver l''entete structure '//
@@ -59,7 +59,7 @@ c       call rdfrin(11,line,npstru(nstr),ifail)
         read(iunit,*)npstru(nstr)
         if(abs(npstru(nstr)).gt.npstmx) then
           if(sellan(1:8).eq.'francais') then
-            write(6,'(a,i2,a)') 
+            write(6,'(a,i2,a)')
      .       'Trop de points pour la structure ',nstr,' !'
             write(6,'(a,i6)') 'Nombre de points declares : ',
      .       abs(npstru(nstr))
@@ -68,7 +68,7 @@ c       call rdfrin(11,line,npstru(nstr),ifail)
             write(6,'(a)') 'Veuillez augmenter la valeur de npstmx '//
      &       'dans CARREDIM.F et recompiler !'
           elseif(sellan(1:7).eq.'english') then
-            write(6,'(a,i2,a)') 
+            write(6,'(a,i2,a)')
      .       'Too many points in structure ',nstr,' !'
             write(6,'(a,i6)') 'Number of points declared : ',
      .       abs(npstru(nstr))

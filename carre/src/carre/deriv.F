@@ -7,7 +7,7 @@
 
 *..   Cette sous-routine calcule la derivee fp en chaque point r d'un
 *  vecteur f.
-
+! calculate the difference of every point
 *  arguments
       INTEGER nmax, n
       REAL(kind=R8) r(n), f(nmax), fp(nmax)
@@ -29,6 +29,17 @@ c.. f3 : difference de psi entre les 3 premiers (ou derniers) points.
 c=========================
 
 *..Debut du calcul
+! ================== translate from french to english by google translater
+! r: table of the coordinate of points.
+! f: Table of the value of the function in each of these points.
+! n: number of points in each table.
+! fp: table of the value of the derived function in relation to r in each of these points.
+! r2: distance between the first two (or last) points.
+! r3:distance between 3first (or last) points.
+! f2: psi difference between the first 2 (or last) points.
+! f3: psi difference between the first 3 (or last) points.
+
+! ================== similar with fx=gradient(f,x) ========================
 
 *..Calcul des derivees a partir de la valeur de la fonction de chacun
 *  des deux points adjacents.
@@ -40,8 +51,8 @@ c=========================
 
    10 CONTINUE
 
-*..Determination de la derivee du premier et du dernier point.
-
+*..Determination de la derivee du premie```r et du dernier point.
+! the derive in the first and last are different between gradient
       r2=r(2)-r(1)
       r3=r(3)-r(1)
       f2=f(2)-f(1)

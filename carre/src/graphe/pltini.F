@@ -7,7 +7,7 @@ c======================================================================
 * Initialization routine for GRAFLIB
 c
 c  variables en common
-#include <COMQUA.F>
+#include <COMQUA.F> ! 
 c
 c  variables locales
       character titre*20

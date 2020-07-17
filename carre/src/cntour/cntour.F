@@ -7,14 +7,18 @@ c======================================================================
 c  lignes de niveau pour les deux fonctions f1=0 et f2=0
 c
 
+! calculate the level lines
+
 cank-970707: dimensions from the file
 *  dimensions
-#include <CARRETYPES.F> ！ 定义变量类型
-#include <CARREDIM.F> ！设置基本变量的默认值
+#include <CARRETYPES.F>
+#include <CARREDIM.F>
+
+! f1=psidx, f2=psidy, n1=nx, n2=ny, xmin=x(1), xmax=x(nx), ymin=y(1), ymax=y(ny)
 
 c  arguments
       integer n1,n2
-      real(kind=R8) f1(nxmax,n2),f2(nxmax,n2),xmin,xmax,ymin,ymax
+      real(kind=R8) f1(nxmax,n2),f2(nxmax,n2),xmin,xmax,ymin,ymax ! initinalizing the f1 and f2
 c
 c  variables en common
 #include <PERIM.F>
@@ -33,7 +37,7 @@ c
 c  1.   premier tableau
 c
 c  1.1  copie des variables double a simple precision
-      do i1=1,n1
+      do i1=1,n1 ! copy the psidx to y
         do i2=1,n2
           y(i1,i2)=f1(i1,i2)
         end do
@@ -44,36 +48,37 @@ c
       x1min=xmin
       x1max=xmax
       x2min=ymin
-      x2max=ymax
+      x2max=ymax ! specify the psi range of location
       sclx='LIN'
       scly='LIN'
       write(*,*) 'Starting'
-      call newpag(x1min,x1max,x2min,x2max,'R (m)$','Z (m)$',
+      call newpag(x1min,x1max,x2min,x2max,'R (m)$','Z (m)$', ! plot the outline of the location
      .  ' ',sclx,scly)
       write(*,*) 'newpag OK'
       call getset(x1a,x1b,x2a,x2b,x1minp,x1maxp,x2minp,x2maxp,ll)
-      if(ll.eq.1 .or. ll.eq.2) then
+      if(ll.eq.1 .or. ll.eq.2) then ! plot in matlab
         x1ap=x1a+(x1min-x1minp)/(x1maxp-x1minp)*(x1b-x1a)
         x1bp=x1a+(x1max-x1minp)/(x1maxp-x1minp)*(x1b-x1a)
       else
-        x1ap=x1a+(log10(x1min)-log10(x1minp))/
+        x1ap=x1a+(log10(x1min)-log10(x1minp))/ ! semilogx in matlab
      .    (log10(x1maxp)-log10(x1minp))*(x1b-x1a)
         x1bp=x1a+(log10(x1max)-log10(x1minp))/
      .    (log10(x1maxp)-log10(x1minp))*(x1b-x1a)
       endif
       if(ll.eq.1 .or. ll.eq.3) then
-        x2ap=x2a+(x2min-x2minp)/(x2maxp-x2minp)*(x2b-x2a)
+        x2ap=x2a+(x2min-x2minp)/(x2maxp-x2minp)*(x2b-x2a) ! plot
         x2bp=x2a+(x2max-x2minp)/(x2maxp-x2minp)*(x2b-x2a)
       else
-        x2ap=x2a+(log10(x2min)-log10(x2minp))/
+        x2ap=x2a+(log10(x2min)-log10(x2minp))/ ! semilogy in matlab
      .    (log10(x2maxp)-log10(x2minp))*(x2b-x2a)
         x2bp=x2a+(log10(x2max)-log10(x2minp))/
      .    (log10(x2maxp)-log10(x2minp))*(x2b-x2a)
       endif
+! set the outline : axis plot or semilogx(y), title, xlabel, and so on
 c
       call cpseti('SET',1)
       call cpsetr('VPS',0.)
-      call cpsetr('VPL - VIEWPORT LEFT',x1ap)
+      call cpsetr('VPL - VIEWPORT LEFT',x1ap) ! axis([xmin xmax ymin ymax])
       call cpsetr('VPR - VIEWPORT RIGHT',x1bp)
       call cpsetr('VPB - VIEWPORT BOTTOM',x2ap)
       call cpsetr('VPT - VIEWPORT TOP',x2bp)
@@ -84,21 +89,21 @@ c
       call cpsetr('CLV - CONTOUR LEVEL VALUE',0.)
       call cpseti('CLU - CONTOUR LEVEL USE',1)
       call cpseti('CLD - CONTOUR LINE DASH PATTERN',65535)
-      write(*,*) 'cpsets ok'
+      write(*,*) 'cpsets ok' ! clipping set
       call cprect(y,nxmax,n1,n2,rwrk,5000,iwrk,1000)
       write(*,*) 'cprect ok'
       call cpcldr(y,rwrk,iwrk)
-      write(*,*) 'cpcldr ok'
+      write(*,*) 'cpcldr ok' ! unkonwn
 c
 c  2.   deuxieme tableau
-c  2.1  copie des variables double a simple precision
+c  2.1  copie des variables double a simple precision ! copy psidy to y
       do i1=1,n1
         do i2=1,n2
           y(i1,i2)=f2(i1,i2)
         end do
       end do
 c
-c  2.2  on trace les lignes de niveau
+c  2.2  on trace les lignes de niveau ! we draw the level lines
 c
       call cpseti('CLS - CONTOUR LEVEL SELECTION',0)
       call cpseti('NCL - NUMBER OF CONTOUR LEVELS',1)

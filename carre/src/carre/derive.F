@@ -26,7 +26,7 @@ cank-970707: dimensions from the file
       REAL(kind=R8) tmp(nxymax), tmpp(nxymax)
 
 *  procedures
-      EXTERNAL DERIV
+      EXTERNAL DERIV ! dclaring the eternal fucntion: deriv
 
 c=========================
 c.. x,y: tableaux des coordonnees des points.
@@ -41,6 +41,17 @@ c.. tmp: tableau selon une ligne ou une colonne de psi.
 c.. tmpp: tableau de la meme ligne ou colonne de derivee de psi par
 c         rapport a x ou y.
 c=========================
+! ==================== translate from french to english
+! x,y: tables of points coordinates.
+! nx, ny: number of points in each table.
+! psi: table of the value of the function in each of these points.
+! psidx: table of the value of the function derived in relation to x in each of these points.
+! psidy: table of the value of the function derives in relation to there in each of these points.
+! i,j:hints
+! tmp: table according to a line or column of psi.
+! tmpp: table of the same line or column of psi derivative by
+! x or y.
+
 
 *
 *.. 1  Calcul des derivees partielles par rapport a X.
@@ -51,7 +62,7 @@ c=========================
       DO 10 j=1, ny
 
 *..Copie du vecteur (ligne) dans un vecteur temporaire.
-
+! similar with psi(:,j) in matlab
          DO 15 i=1, nx
             tmp(i) = psi(i,j)
    15    CONTINUE

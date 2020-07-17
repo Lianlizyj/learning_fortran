@@ -13,7 +13,7 @@ c  procedures
       external agseti,agsetc,agsetr,agdshn
 c
 c  data
-      data dshp/'$$',
+      data dshp/'$$', ! assign the value to dshp
      .          '$''',
      .          '$$''',
      .          '$$$''',
@@ -23,15 +23,15 @@ c  data
      .          '$$$$$$$$$$''',
      .          '$$$$$$$$$$$$$''$''',
      .          '$$$$$$$$''$'''/
-      data nchar/2,2,3,4,6,7,16,11,16,11/
+      data nchar/2,2,3,4,6,7,16,11,16,11/ ! assigning for nchar
 c
-c  definition des motifs de courbes
-      NIC = 10 
-      CALL AGSETI ('DASH/SELECTOR.',nIC)
+c  definition des motifs de courbes ！ define the curve parttern
+      NIC = 10
+      CALL AGSETI ('DASH/SELECTOR.',nIC) ! unknown external fucntion
       DO 15 ic=1,NIC
-      CALL AGSETI ('DASH/LENGTH.',nchar(ic))
-      CALL AGSETC (AGDSHN(IC),DSHP(IC))
-      CALL AGSETR ('DASH/CHARACTER.',.03)
+      CALL AGSETI ('DASH/LENGTH.',nchar(ic)) ! unknown external fucntion
+      CALL AGSETC (AGDSHN(IC),DSHP(IC)) !
+      CALL AGSETR ('DASH/CHARACTER.',.03) !
 15    CONTINUE
       return
       end

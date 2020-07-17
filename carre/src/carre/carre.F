@@ -32,9 +32,9 @@ c        1. permettre l'imposition de points fixes ou de coins
 *  variables.
 
 cank-970702: moved dimensions to the CARREDIM.F
-#include <CARRETYPES.F>
-#include <CARREDIM.F>
-#include <COMLAN.F>
+#include <CARRETYPES.F> ! R4,R8,I4
+#include <CARREDIM.F> ! dimmension assign
+#include <COMLAN.F> !
 #include <git_version_Carre.h>
 
       REAL(kind=R8) cstlin,zero,eps_Xpt,rmax,zmax
@@ -79,9 +79,9 @@ cank-970702: moved dimensions to the CARREDIM.F
       character lign80*80,nomstr(strumx)*80
 
       REAL(kind=R8) stp0, stpmin
-      PARAMETER (stpmin=0.0001_R8)
+      PARAMETER (stpmin=0.0001_R8) ! minmum length between two grid point
 
-#ifdef EXTRA_GRAPHS
+#ifdef EXTRA_GRAPHS ! predefine command
       INTEGER ig, ipx, idep, iarr, idp2, iar2, ireg1, ireg2, n,
      .  re, rg, ro, rp, rv, ry
       REAL(kind=R8) ls, vx(npmamx), vy(npmamx)
@@ -92,8 +92,8 @@ cank-970702: moved dimensions to the CARREDIM.F
 
 *..Procedures
 *
-      INTRINSIC MIN,index
-      EXTERNAL pltini,pltend,cadre,motifs,DERIVE,cntour,GRAD0,
+      INTRINSIC MIN,index ! intrinsic function
+      EXTERNAL pltini,pltend,cadre,motifs,DERIVE,cntour,GRAD0, ! external Procedures
      .   SELPTX,SPTRIS,ARGSEP,FRTIER,MAILLE,trace,trace2,entete
      ,        ,trc_stk_in,trc_stk_out
 c======================================================================
@@ -271,20 +271,20 @@ c======================================================================
 *..1.0  Initialisation des variables par defaut et de la bibliotheque
 *       graphique
 *
-      call defaut
-      CALL pltini
-      CALL cadre
-      CALL motifs
+      call defaut ! set the relaxation parameters and set the language
+      CALL pltini ! graphe/pltini set the qualit parameter to avoid the memory error, defined in COMQUA.F
+      CALL cadre ! graphe/cadre set the outline length, the declaring variables is defined in include/PERIM.F
+      CALL motifs ! graphe/motifs set the default curve plot,containing some unknown fucntion
 *
 *..2.0  Open the data files
 *
       OPEN(UNIT=7, FILE='rzpsi.dat', STATUS='old')
       OPEN(UNIT=8, FILE='structure.dat', STATUS='old')
       OPEN(UNIT=9, FILE='carre.dat', STATUS='unknown')
-      OPEN(UNIT=10,FILE='carre.out',STATUS='unknown')
-      open(unit=11,status='scratch')
+      OPEN(UNIT=10,FILE='carre.out',STATUS='unknown') ! contain the carre setting parameters
+      open(unit=11,status='scratch') ! known file, may be a temperature file
 c
-c  2.1  specify output format
+c  2.1  specify output format ! display the carre version
       write(10,*)'output format: carre70; version : ', git_version_Carre
 
 *
@@ -296,26 +296,26 @@ c  2.1  specify output format
 100   format(a)
 
       iflag=-1
-      rewind(7)
+      rewind(7) ! reset the file pointer to the begining
       rewind(8)
       rewind(9)
       rewind(10)
-      call entete(7,'$r',iflag)
-      read(7,100)lign80
-      i=index(lign80,'=')
-      call rdfrin(11,lign80(i+1:80),nx,ierror)
-      READ(7,*) (x(i), i=1, nx)
+      call entete(7,'$r',iflag) ! reading the line, which a specify string (similar contains in matlab), set the file pointer the r value
+      read(7,100)lign80 ! read a format variables
+      i=index(lign80,'=') ! find the index of the '='
+      call rdfrin(11,lign80(i+1:80),nx,ierror) ! read the integer value from a chain of character variables, this function will create a temperary file
+      READ(7,*) (x(i), i=1, nx) ! read the r location
 
 *..Read the values of y
 
-      call entete(7,'$z',iflag)
+      call entete(7,'$z',iflag) ! find the z value begining file pointer
       read(7,100)lign80
-      i=index(lign80,'=')
-      call rdfrin(11,lign80(i+1:80),ny,ierror)
-      READ(7,*) (y(i), i=1, ny)
+      i=index(lign80,'=') ! find the string line, containing the dimension
+      call rdfrin(11,lign80(i+1:80),ny,ierror) ! get the dimension from above string line
+      READ(7,*) (y(i), i=1, ny) ! read in the z array location
       stp0 = min(max(abs(x(nx)-x(1))/1000.,
-     ,               abs(y(ny)-y(1))/1000.,10.*stpmin),100.*stpmin)
-
+     ,               abs(y(ny)-y(1))/1000.,10.*stpmin),100.*stpmin) ! minmum value of the legth between two gridï¼Œ this is constantï¼Œ which value is 0.0001
+     ! max(0.006,0.001)=0.006,min(0.006,0.01)=0.006, stp0=0.006
       rmax = 0.0
       do i = 1, nx-1
         rmax = max(rmax, (x(i+1)-x(i))**2)
@@ -328,12 +328,14 @@ c  2.1  specify output format
 
 *..Read the values of psi
 
-      call entete(7,'$psi',iflag)
-      READ(7,*) ((psi(i,j), i=1, nx), j=1, ny)
+      call entete(7,'$psi',iflag) ! get the begining file pointer
+      READ(7,*) ((psi(i,j), i=1, nx), j=1, ny) ! read the psi values
 
       DO 5 j=1,ny
          DO 4 i=1,nx
-            psi(i,j) = psi(i,j) + MIN(cstlin*(y(j)-y(ny/2)),zero)
+            psi(i,j) = psi(i,j) + MIN(cstlin*(y(j)-y(ny/2)),zero) ! cstlin=0
+        ! a linear constant added along y to artificially disconnect
+        ! the X-points. Set to 0 for connected double-nulls
     4    CONTINUE
     5 CONTINUE
 c---
@@ -349,24 +351,26 @@ c       psi(i,ny-j+1)=0.5*((1.+a00(1,1,1))*ypto+(1.-a00(1,1,1))*xpto)
 c     enddo
 c     enddo
 c---
-      close(unit=7)
+      close(unit=7) ! close rzpsi
 
 *
 *..3.1  Read the structures.
 
       nstruc=0
-      call listru(8,nstruc,npstru,nomstr,xstruc,ystruc,npstmx,strumx)
+      call listru(8,nstruc,npstru,nomstr,xstruc,ystruc,npstmx,strumx) ! read the structures, if error, display the error message
 
 *
 *..4.0  Calculate the first partial derivatives in x and y and store
 *       them in arrays psidx and psidy
 
-      CALL DERIVE(nx,ny,x,y,psi,psidx,psidy)
+      CALL DERIVE(nx,ny,x,y,psi,psidx,psidy) ! get the difference of psi
 
 *
 *..5.0  Plot the level lines for psidx=0 and psidy=0
 *
-      CALL cntour(psidx,psidy,nx,ny,x(1),x(nx),y(1),y(ny))
+      CALL cntour(psidx,psidy,nx,ny,x(1),x(nx),y(1),y(ny))  !  'selptx' routine
+      ! for simultaneous visualization of the dpsi/d. = 0 lines and the
+      ! selection of X- and O-points.
 c
 c  interpolation coefficients for psi and its derivatives
 
@@ -516,7 +520,7 @@ c     &  distnv(1,2),xpto,ypto)
           write(6,*) 'Do you wish to have an automated follow-up?'
         endif
    88   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Type 1 for yes and 2 for no'
         endif
@@ -531,7 +535,7 @@ c     &  distnv(1,2),xpto,ypto)
            ymini= -1.48
            ymaxi= -1.32
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Région 2 près de la plaque 1'
+             write(6,*) 'Rï¿½gion 2 prï¿½s de la plaque 1'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'Region 2 near plate 1'
            endif
@@ -556,7 +560,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 près du point X par la gauche'
+             write(6,*) 'Frontiï¿½re 1/3 prï¿½s du point X par la gauche'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'HFS separatrix segment above X-point'
            endif
@@ -571,7 +575,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 à gauche'
+             write(6,*) 'Frontiï¿½re 1/3 ï¿½ gauche'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'HFS separatrix'
            endif
@@ -586,7 +590,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 proche du sommet'
+             write(6,*) 'Frontiï¿½re 1/3 proche du sommet'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'HFS separatrix near top of machine'
            endif
@@ -600,7 +604,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 au sommet'
+             write(6,*) 'Frontiï¿½re 1/3 au sommet'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'Separatrix at top of machine'
            endif
@@ -614,7 +618,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 proche du sommet à droite'
+             write(6,*) 'Frontiï¿½re 1/3 proche du sommet ï¿½ droite'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'LFS separatrix near top of machine'
            endif
@@ -629,7 +633,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 à droite'
+             write(6,*) 'Frontiï¿½re 1/3 ï¿½ droite'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'LFS separatrix near outer midplane'
            endif
@@ -643,7 +647,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Frontière 1/3 proche du point X par la droite'
+             write(6,*) 'Frontiï¿½re 1/3 proche du point X par la droite'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'LFS separatrix above X-point'
            endif
@@ -658,7 +662,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Région 2 près du point X'
+             write(6,*) 'Rï¿½gion 2 prï¿½s du point X'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'Region 2 near X-point'
            endif
@@ -673,7 +677,7 @@ c     &  distnv(1,2),xpto,ypto)
      .           nivx,nivy,nivtot,nbniv,np1,npr,xmail,ymail,nreg,last)
 
            if(sellan(1:8).eq.'francais') then
-             write(6,*) 'Région 2 près de la plaque 2'
+             write(6,*) 'Rï¿½gion 2 prï¿½s de la plaque 2'
            elseif(sellan(1:7).eq.'english') then
              write(6,*) 'Region 2 near plate 2'
            endif
@@ -690,8 +694,8 @@ c     &  distnv(1,2),xpto,ypto)
         endif
 
   987   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Voir la région 2?'
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Voir la rï¿½gion 2?'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Do you wish to see region 2?'
           write(6,*) 'Type 1 for yes and 2 for no'
@@ -711,8 +715,8 @@ c     &  distnv(1,2),xpto,ypto)
         endif
 
  986    if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Voir la séparatrice à la frontière 1/2 ?'
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Voir la sï¿½paratrice ï¿½ la frontiï¿½re 1/2 ?'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Do you wish to see the separatrix to region 2?'
           write(6,*) 'Type 1 for yes and 2 for no'
@@ -769,12 +773,12 @@ c     &  distnv(1,2),xpto,ypto)
         endif
 
         if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Souhaitez-vous revoir la séparatrice?'
+          write(6,*) 'Souhaitez-vous revoir la sï¿½paratrice?'
         else if(sellan(1:7).eq.'english') then
           write(6,*) 'Do you wish to see the separatrix again?'
         endif
    76   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Type 1 for yes and 2 for no'
         endif
@@ -787,7 +791,7 @@ c     &  distnv(1,2),xpto,ypto)
           write(6,*) 'Do you wish to make a zoom?'
         endif
    77   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Type 1 for yes and 2 for no'
         endif
@@ -798,18 +802,18 @@ c     &  distnv(1,2),xpto,ypto)
         endif
 
     9   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Définissez les bords.'
+          write(6,*) 'Dï¿½finissez les bords.'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Define the edges.'
         endif
    10   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Limite inférieure en R'
+          write(6,*) 'Limite infï¿½rieure en R'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Lower bound in R'
         endif
         read(5,*,end=11, err=10) xmini
    11   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Limite supérieure en R'
+          write(6,*) 'Limite supï¿½rieure en R'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Upper bound in R'
         endif
@@ -837,7 +841,7 @@ c     &  distnv(1,2),xpto,ypto)
         do while (rp.eq.1)
   913     if(sellan(1:8).eq.'francais') then
             write(6,*) 'Voulez-vous faire un autre agrandissement?'
-            write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+            write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
           else if(sellan(1:7).eq.'english') then
             write(6,*) 'Do you wish to make another zoom?'
             write(6,*) 'Type 1 for yes and 2 for no'
@@ -846,30 +850,30 @@ c     &  distnv(1,2),xpto,ypto)
    69     continue
           if (rp.eq.1) then
             if(sellan(1:8).eq.'francais') then
-              write(6,*) 'Définissez les bords.'
+              write(6,*) 'Dï¿½finissez les bords.'
             elseif(sellan(1:7).eq.'english') then
               write(6,*) 'Define the edges.'
             endif
    70       if(sellan(1:8).eq.'francais') then
-              write(6,*) 'Limite inférieure en R'
+              write(6,*) 'Limite infï¿½rieure en R'
             elseif(sellan(1:7).eq.'english') then
               write(6,*) 'Lower bound in R'
             endif
             read(5,*,end=71, err=70) xmini
    71       if(sellan(1:8).eq.'francais') then
-              write(6,*) 'Limite supérieure en R'
+              write(6,*) 'Limite supï¿½rieure en R'
             elseif(sellan(1:7).eq.'english') then
               write(6,*) 'Upper bound in R'
             endif
             read(5,*,end=72,err=71) xmaxi
    72       if(sellan(1:8).eq.'francais') then
-              write(6,*) 'Limite inférieure en Z'
+              write(6,*) 'Limite infï¿½rieure en Z'
             elseif(sellan(1:7).eq.'english') then
               write(6,*) 'Lower bound in Z'
             endif
             read (5,*,end=73,err=72) ymini
    73       if(sellan(1:8).eq.'francais') then
-              write(6,*) 'Limite supérieure en Z'
+              write(6,*) 'Limite supï¿½rieure en Z'
             elseif(sellan(1:7).eq.'english') then
               write(6,*) 'Upper bound in Z'
             endif
@@ -891,7 +895,7 @@ c     &  distnv(1,2),xpto,ypto)
           write(6,*) 'Do you wish to see the guard regions?'
         endif
    78   if(sellan(1:8).eq.'francais') then
-          write(6,*) 'Répondez 1 si c''est oui ou 2 si c''est non'
+          write(6,*) 'Rï¿½pondez 1 si c''est oui ou 2 si c''est non'
         elseif(sellan(1:7).eq.'english') then
           write(6,*) 'Type 1 for yes and 2 for no'
         endif

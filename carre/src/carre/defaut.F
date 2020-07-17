@@ -16,7 +16,7 @@ cank-970707: dimensions from the file
 #include <CARREDIM.F>
 
 #include <COMLAN.F>
-#include <COMRLX.F>
+#include <COMRLX.F> ! declaring some real variables and common
 c======================================================================
 c  calcul
 c
