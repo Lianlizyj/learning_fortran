@@ -7,8 +7,8 @@ c
       IMPLICIT NONE
 #include <CARRETYPES.F>
 
-c*** This subroutine calculates the positions of the successive points 
-c*** on a specified level line. It stops when the line crosses a 
+c*** This subroutine calculates the positions of the successive points
+c*** on a specified level line. It stops when the line crosses a
 c*** structure or when it reaches the limits of the equilibrium.
 c*** The calculated level line should not cross any of pre-defined
 c*** limiting curves.
@@ -52,8 +52,8 @@ c.. nbcrb: number of the limiting curves.
 c.. plaque: index of the target where the line stops.
 c.. ist,jst: indices for the structures.
 c.. determ: matrix determinant for the 2 equations.
-c.. mult1: facteur multiplicatif du segment de courbe.
-c.. mult2: facteur multiplicatif du segment de structure.
+c.. mult1: facteur multiplicatif du segment de courbe. ! mult1: multiplicative factor of the curve segment.
+c.. mult2: facteur multiplicatif du segment de structure. ! mult2: multiplicative factor of the structure segment.
 c.. x0 y0: coordinates of the starting point
 c=========================
 
@@ -76,6 +76,12 @@ c=========================
 *  la direction a chaque fois. On verifie egalement que le nouveau
 *  segment forme des 2 derniers points ne traverse pas les courbes t.
 
+
+
+! by knowing the initial direction, we look at which dimension the level
+! line emerges. This adjusts the row, column and direction each time.
+! We also check that the new segment formed by the last 2 points does not cross the curves t.
+
 *  by knowing the initial direction, one looks by which side exits the level line. One
 *  adjusts the row, the column and the direction each time. One verifies also that the
 *  new segment formed by the last 2 points does not cross the curves T
@@ -89,7 +95,7 @@ c=========================
             crby(k) =interp(y(j),y(j+1),f(i+1,j),f(i+1,j+1),niv)
 
 cdps-20051115 The following logical expressions were previously combined into a single
-c*** one below.  Separated them and replaced their effective value with trvers2 to 
+c*** one below.  Separated them and replaced their effective value with trvers2 to
 c*** prevent an unintended call to trvers.
 
             trvers2=.false.
@@ -195,7 +201,7 @@ cdps-20051115 Part of the above change.
      .           ' Pas cense traverser de courbe'
                call pltend
                STOP
-            ELSE IF (trvers2) THEN 
+            ELSE IF (trvers2) THEN
                 k=k-1
                 write(6,*)'Erreur dans crbniv, travers.',
      .            ' Pas cense traverser de courbe'
@@ -230,7 +236,7 @@ cdps-20051115 Part of the above change.
         go to 10
       endif
 
-*..If idir.le.0, then find only one point, change the sign of idir, 
+*..If idir.le.0, then find only one point, change the sign of idir,
 *  and return
 
 *..Si idir etait inferieur ou egal a 0, alors on ne faisait que chercher
@@ -253,7 +259,7 @@ cdps-20051115 Part of the above change.
 
       DO 60 jst=1, nstruc
 
-*.. Provided that the number of points in the curve already exceeds 2, 
+*.. Provided that the number of points in the curve already exceeds 2,
 *   check whether the structure is different from the starting one.
 
 *..On verifie seulement si la structure est differente de celle de
@@ -298,7 +304,7 @@ cdps-20051115 Part of the above change.
 
                   IF ((mult2.GT.0.).AND.(mult2.LT.1.)) THEN
 
-*..The point of intersection between the segment of curve and the 
+*..The point of intersection between the segment of curve and the
 *  segment of structure becomes the last point of the level line
 
                      crbx(k) = crbx(k-1) + (crbx(k)-crbx(k-1))*mult1
@@ -328,7 +334,7 @@ cdps-20051115 Part of the above change.
 *.. 3   Test pour savoir si la ligne de niveau est soit arrivee au bord
 *       de la maille, soit revenue a son point de depart.
 *
-
+! Test to see if the level line has either reached the edge of the mesh or returned to its starting point.
       if(i.eq.0 .or. i.eq.nx .or. j.eq.0 .or. j.eq.ny) return
 
       if(k.gt.ngrace) then

@@ -9,7 +9,7 @@ c
 c  initialisation des coefficients d'interpolation pour psi et ses
 c  derivees par rapport a x et a y
 c
-c  arguments
+c  arguments ！ axx specify the coefficient of SOL， core and the pfr
       integer nxmax,nymax,nx,ny
       real(kind=R8)
      .  psi(nxmax,ny),psidx(nxmax,ny),psidy(nxmax,ny),x(nx),y(ny),
@@ -17,7 +17,7 @@ c  arguments
      .  a11(nxmax,nymax,3)
 c
 c  calculs
-      CALL COEFF(nxmax,nymax,nx,ny,x,y,psi,a00(1,1,1),a10(1,1,1),
+      CALL COEFF(nxmax,nymax,nx,ny,x,y,psi,a00(1,1,1),a10(1,1,1), ! use three order interpolte
      .  a01(1,1,1),a11(1,1,1))
       CALL COEFF(nxmax,nymax,nx,ny,x,y,psidx,a00(1,1,2),a10(1,1,2),
      .  a01(1,1,2),a11(1,1,2))

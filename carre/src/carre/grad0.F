@@ -9,7 +9,8 @@
 *..  Cette sous-routine verifie pour chaque carre si il y a intersection
 *  entre les lignes de niveau psidx=0 et psidy=0 et si oui elle garde
 *  les coordonnees en memoire.
-
+! This subroutine checks for each edge if there is an intersection
+! between the level lines psidx = 0 and psidy = 0 and if so it keeps the coordinates in memory.
 *  arguments
       INTEGER nxmax,nymax,nx,ny,gradmx,ii(gradmx),jj(gradmx),npxtot
       REAL(kind=R8) pointx(gradmx), pointy(gradmx),x(nx),y(ny)
@@ -31,10 +32,12 @@ c.. ii,jj: tableaux des indices en x et en y des carres ou le gradient
 c          est nul.
 c.. i,j: indices
 c.. ax,bx,cx,dx(i,j,2): coefficients de l'equation:
+! ax, bx, cx, dx (i, j, 2): coefficients of the equation:
 c                           ax + bx*X + cx*Y + dx*X*Y = psidx
 c.. ay,by,cy,dy(i,j,3): coefficients de l'equation:
 c                           ay + by*X + cy*Y + dy*X*Y = psidy
 c.. aa,bb,cc: coefficients de l'equation des racines:
+! aa, bb, cc: coefficients of the root equation:
 c             ( -bb +- SQRT(bb**2 - 4*aa*cc)) / 2*aa
 c.. y1,y2: points ou la fonction s'annule selon y.
 c.. x1,x2: points correspondants ou la fonction s'annule selon x.
@@ -68,7 +71,7 @@ c=========================
                ENDIF
 
 *..Test pour savoir si le carre contient une de ces racines.
-
+! Test to see if the edge contains one of these roots.
                IF (y1.GE.y(j).AND.y1.LE.y(j+1)) THEN
                   if(a10(i,j,2)+a11(i,j,2)*y1.ne.0.) then
                     x1 = (-a00(i,j,2) - a01(i,j,2)*y1)/(a10(i,j,2)
@@ -79,6 +82,7 @@ c=========================
                   IF (x1.GE.x(i).AND.x1.LE.x(i+1)) THEN
 
 *..Sauvegarde de chaque point ou le gradient s'annule.
+ ! Save each point where the gradient is canceled.
 
                      npxtot = npxtot + 1
                      pointx(npxtot) = x1

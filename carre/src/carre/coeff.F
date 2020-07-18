@@ -6,8 +6,9 @@
 
 *..   Cette sous-routine calcule les coefficients a00, a10, a01 et a11
 *  pour chaque carre de coordonnees (i,j) de l'equation :
-*         f(x,y) = a00 + a10*X + a01*Y + a11*XY.
-
+*         f(x,y) = a00 + a10*X + a01*Y + a11*XY. ! real function
+! This subroutine calculates A00, A10, A01, and a11 coefficients.
+! For each orientation ("I, J") in the equation:
 *  arguments
       INTEGER n1max, n2max, nx, ny
       REAL(kind=R8)
@@ -24,6 +25,7 @@ c.. f  : <=> psi
 c.. a00,a10,a01,a11: coefficients.(ind. selon x, ind. selon y)
 c.. deltxy: distance entre 2 points selon x, multiplie par la
 c           distance entre 2 points selon y.
+! deltxy: distance between 2 points along x, multiplied by the distance between 2 points along y.
 c=========================
 *
 *.. Debut du calcul.

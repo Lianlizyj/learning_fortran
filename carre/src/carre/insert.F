@@ -18,7 +18,7 @@ c=======================================================================
       parameter (npxmx4=4*npxmx)
       integer i,j,k,l,m,n,iipx(npxmx4),
      ,  ii(strumx),jj(nbdmx),kk(npxmx),ll(nbdmx),mm(npxmx)
-      
+
       data iipx /npxmx4*0/
       save iipx
 
@@ -29,7 +29,7 @@ c.. nbdef:  number of targets
 c=======================================================================
 
 c*** If the structure index is nonzero, it points to a structure
-c*** intersecting the separatrix branch. Store all such cases for a 
+c*** intersecting the separatrix branch. Store all such cases for a
 c*** while - we will select the primary strikepoints after all x-points
 c*** have been treated.
 cank-19990727: symptomatic treatment
@@ -49,11 +49,11 @@ c*** at the same x-point with the same target should be screened
 
 c=======================================================================
 
-      entry trgarng(inddef,indxpt,xst,yst,nbdef,npx)
+      entry trgarng(inddef,indxpt,xst,yst,nbdef,npx) ! unknown, maybe used for target order
 c=======================================================================
-c*** Here, we determine the "primary" strikepoints - i.e., those 
-c*** connected to the innermost x-point for each target, and check for  
-c*** the consistency of the strike-points and targets. 
+c*** Here, we determine the "primary" strikepoints - i.e., those
+c*** connected to the innermost x-point for each target, and check for
+c*** the consistency of the strike-points and targets.
 c*** Each x-point must be connected to two "primary" strike-points.
 c***
 c*** Input:
@@ -165,7 +165,7 @@ c<<<
       if(m.gt.0) then !{
         write(0,'(1x,a,4i4)') 'kk : ',(kk(i),i=1,m)
       end if !}
-c>>> 
+c>>>
 c*** Now look for targets intersected twice
       do j=1,nbdef !{
         if(ii(inddef(j)).eq.2) then !{
@@ -204,16 +204,16 @@ c<<<
         write(0,'(1x,a4,4x,1p,10(e10.3,1x))') 'xst:',(xst(i),i=1,nbdef)
         write(0,'(1x,a4,4x,1p,10(e10.3,1x))') 'yst:',(yst(i),i=1,nbdef)
       end if !}
-c>>> 
+c>>>
 
 c*** Check the consistency of the "primary targets" once more
-      
+
       do i=1,npx !{
         mm(i)=0
       end do !}
       do i=1,nbdef !{
         mm(indxpt(i))=mm(indxpt(i))+1
-      end do !} 
+      end do !}
       m=0
       do i=1,npx !{
         if(mm(i).ne.2) then !{
@@ -222,9 +222,9 @@ c*** Check the consistency of the "primary targets" once more
      ,      'wrong number of "private" targets. ipx,n = ',i,mm(i)
         end if !}
       end do !}
-      if(m.gt.0) stop '==> check the target specification' 
+      if(m.gt.0) stop '==> check the target specification'
 c<<<
       write(0,*) 'Leaving trgarng: ',nbdef
-c>>> 
+c>>>
 c=======================================================================
       end

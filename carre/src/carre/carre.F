@@ -388,7 +388,7 @@ c  interpolation coefficients for psi and its derivatives
 *
 
 cank-970702: moved dimensions to the included file
-      CALL SELPTX(npxtot,npx,pointx,pointy,ii,jj,ptx,
+      CALL SELPTX(npxtot,npx,pointx,pointy,ii,jj,ptx, ! select the XP and OP
      .            pty,iptx,jptx,xpto,ypto,racord,limcfg)
 
 

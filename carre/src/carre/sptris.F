@@ -6,13 +6,13 @@ c
 c  version : 21.07.2000 13:38
 c
 c=======================================================================
-c*** This subroutine finds first the second starting point for each 
-c*** separatrix branch (the first point is the X-point). 
-c*** Once such a point is found, a subroutine CRBNIV is called, which 
+c*** This subroutine finds first the second starting point for each
+c*** separatrix branch (the first point is the X-point).
+c*** Once such a point is found, a subroutine CRBNIV is called, which
 c*** traces this branch until it strikes a target or comes to an X-point
 c*** and stores the trace coordinates for plotting.
-c*** Finally, a subroutine ORDDEF is called to order the targets 
-c*** according to the CARRE conventions, i.e. from right to left, from 
+c*** Finally, a subroutine ORDDEF is called to order the targets
+c*** according to the CARRE conventions, i.e. from right to left, from
 c*** top to bottom.
 c=======================================================================
 
@@ -50,7 +50,7 @@ c=======================================================================
 
 *..Initialisation
 c<<<
-      write(0,*) 
+      write(0,*)
       write(0,*) 'Entering sptris: npx=',npx
 c>>>
 
@@ -65,10 +65,10 @@ c>>>
         ix = iptx(ipx)
         jx = jptx(ipx)
 c<<<
-        write(0,*) 
+        write(0,*)
         write(0,'(a,3i6,1p,2(1x,1e12.5))') 'ipx,ix,jx,ptx,pty =',
      ,                                      ipx,ix,jx,ptx(ipx),pty(ipx)
-        write(0,'(a,1p,4(1x,1e12.5))') 
+        write(0,'(a,1p,4(1x,1e12.5))')
      ,   'psi(ix,jx),CCW =',psi(ix,jx),psi(ix+1,jx),
      ,                      psi(ix+1,jx+1),psi(ix,jx+1)
 c>>>
@@ -94,12 +94,12 @@ c>>>
 cank-20000720 { here we change the algorithm.
 c*** Originally, the perimeter of the cell containing the X-point was
 c*** searched for the intersections with the separatrix branches - that
-c*** is, for the proper PSI value at each cell boundary. If at some 
+c*** is, for the proper PSI value at each cell boundary. If at some
 c*** boundary no intersection was found, then the adjacent cell was also
 c*** examined in a similar way. Due to the numerical noise (?), this
-c*** often led to a confusion when not all the separatrix branches 
+c*** often led to a confusion when not all the separatrix branches
 c*** could be identified properly.
-c*** Now we check the perimeter of the rim of cells (3x3) surrounding 
+c*** Now we check the perimeter of the rim of cells (3x3) surrounding
 c*** the one with X-point to reduce the effect of noise.
 
         i2=ix+2
@@ -122,7 +122,7 @@ c>>>
 c<<<
             write(0,'(a,6i4)') 'i1,i2,j1,j2,iref,jref =',
      .                          i1,i2,j1,j2,iref,jref
-            write(0,'(a,1p,3(1x,1e12.5))') 
+            write(0,'(a,1p,3(1x,1e12.5))')
      ,                         'psi(i1,j1),psi(i2,j2),fctpx(ipx)=',
      ,                          psi(i1,j1),psi(i2,j2),fctpx(ipx)
 c>>>
@@ -140,7 +140,7 @@ c>>>
      .                                psi(i2,j2),fctpx(ipx))
                 separy(k,isep,ipx) = y(j1)
               endif !}
-            
+
 c<<<
               write(0,'(a,1p,3i4,2(1x,1e12.5))')
      ,         'Cell crossing: k,isep,ipx,separx,separy =',
@@ -148,7 +148,7 @@ c<<<
      ,                                    separy(k,isep,ipx)
 c>>>
 
-*..Call the routine which traces the line and stores the points
+*..Call the routine which traces the line and stores the points ! tracing
 
               call crbniv(iref,jref,k,idir,nxmax,nymax,nx,ny,x,y,psi,
      .                fctpx(ipx),separx(1,isep,ipx),separy(1,isep,ipx)
@@ -157,7 +157,7 @@ c>>>
      .                ptx(ipx),pty(ipx))
 
               nptot(isep,ipx) = k
-              call insert(indstr,inddef,nbdef,ipx)
+              call insert(indstr,inddef,nbdef,ipx) ! check insert
               indplq(isep,ipx) = indstr
               if(nbdfav.eq.nbdef-1) then !{
                 nbdfav=nbdef
@@ -168,13 +168,13 @@ c>>>
             endif !}
           end do !}
         end do !}
-        write(0,*) 
+        write(0,*)
         write(0,'(a,4i4)') 'After idir loop: isep,ipx,nbdef,nbdfav = ',
      ,                                        isep,ipx,nbdef,nbdfav !###
 cank}
       end do !}
 c<<<
-      write(0,*) 
+      write(0,*)
       write(0,'(a,4i4)') 'After X-point loop: isep,npx,nbdef,nbdfav = ',
      ,                                        isep,npx,nbdef,nbdfav !###
       if(nbdef.gt.0) then !{
@@ -194,7 +194,7 @@ c<<<
       end if !}
 c>>>
 
-*   Calculation of psi at the O-point using the fact that the O-point 
+*   Calculation of psi at the O-point using the fact that the O-point
 *  coordinates are at the end of ptx and pty (see routine SELPTX)
 
       ipx=npx+1
@@ -208,18 +208,18 @@ c<<<
 c      write(0,*) 'before trgarng'
 c>>>
       call trgarng(inddef,ixp_hlp,xsttmp,ysttmp,nbdef,npx)
-      
+
 *..Call the subroutine which orders the divertor plates according to the
 *   specific order
 
 c<<<
 c      write(0,*) 'before orddef'
 c>>>
-      call orddef(inddef,nbdef,xsttmp,ysttmp,ptx,pty,npx)
+      call orddef(inddef,nbdef,xsttmp,ysttmp,ptx,pty,npx) ! order the target
 
 c<<<
       write(0,*) 'Leaving sptris...'
-      write(0,*) 
+      write(0,*)
 c>>>
       return
       end

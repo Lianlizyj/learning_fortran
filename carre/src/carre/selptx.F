@@ -12,6 +12,10 @@ c======================================================================
 *  bas. On demande aussi l'indice du point central (point O), ainsi que,
 *  dans le cas ou il y a 2 points X, si on desire qu'ils soient
 *  raccordes.
+! This subroutine prints the list of points where the gradient is canceled out and
+! asks us which one (which) we will take as point (s) X. If there is more than one point X
+! then they are ordered from top to top. low. We also ask for the index of the central point (point O), as well as,
+! if there are 2 X points, if you want them to be connected.
 
 cank-970702: moved dimensions into a separate file
 *  dimensions
@@ -129,7 +133,7 @@ c*** Set the absolute tolerance for each candidate point
             x1=1.e30
             do i=1,npxtot
               if(i.ne.j) then
-                x2=rdist(pointx(i),pointy(i),pointx(j),pointy(j))
+                x2=rdist(pointx(i),pointy(i),pointx(j),pointy(j)) ! rdist:
                 if(x2.gt.eps_hlp) x1=min(x1,x2)
               end if
             end do
